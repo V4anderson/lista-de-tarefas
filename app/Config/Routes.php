@@ -7,6 +7,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Tasks::read',['filter' => 'auth:admin']);
 $routes->post('/tasks/create', 'Tasks::create',['filter' => 'auth:admin']);
+$routes->get('/tasks/alterarstatus/(:segment)', 'Tasks::alterarStatus/$1',['filter' => 'auth:admin']);
+
 
 $routes->match(['get','post'],'auth','Auth::login');
 $routes->get('logout','Logout::index');

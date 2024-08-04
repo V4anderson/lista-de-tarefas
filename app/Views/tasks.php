@@ -26,19 +26,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="<?php echo base_url('tasks/create'); ?>" method="post">
+        <?php echo csrf_field(); ?>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Titulo:</label>
-            <input type="text" class="form-control" id="recipient-name" name="titulo">
+            <input type="text" class="form-control" id="titulo" name="titulo">
           </div>
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Descrição:</label>
-            <textarea class="form-control" id="message-text" name="descricao"></textarea>
+            <textarea class="form-control" id="descricao" name="descricao"></textarea>
           </div>
+          <div class="modal-footer">
+           <button type="submit" class="btn btn-success" id="btnSalvar">Salvar Tarefa</button>
+        </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success">Salvar Tarefa</button>
       </div>
     </div>
   </div>
@@ -56,11 +57,23 @@
             </tr>
         </thead>
         <tbody>
-                <td>Dev</td>
-                <td>Desenvolvimento de Tasklists</td>
-                <td>Pendente</td>
-                <td><button class="btn btn-secondary">Finalizar</button></td>
-        </tbody>
+          <?php
+          foreach ($Tarefas as $linha) {
+            echo '<td>'.$linha['titulo'].'</td>';
+            echo '<td>'.$linha['descricao'].'</td>';
+            if($linha['status'] == 0)
+            {
+              echo '<td>Pendente</td>';
+            }
+            else if ($linha['status'] == 1)
+            {
+              echo '<td>Finalizado</td>';
+            }
+            echo '<td><a class="btn btn-secondary" href='.base_url('/tasks/alterarstatus/'.$linha['id']).'>Finalizar</a></td>';
+            echo '</tbody>';
+          }
+          ?>
+
     </table>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
